@@ -31,10 +31,14 @@ public class Employee {
     @Column(nullable = false)
     private String email;
 
+    @Column(name = "url_avatar", nullable = false)
+    private String avatarUrl;
+
     public Employee(String username, String firstName, String lastName, String email) {
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.avatarUrl = "https://ui-avatars.com/api/?name=" + this.getFirstName() + "+" + this.getLastName();
     }
 }

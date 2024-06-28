@@ -41,12 +41,12 @@ public class DeviceService {
         return this.deviceRepository.findById(deviceId).orElseThrow(() -> new NotFoundException(deviceId));
     }
 
-    public Device findByIdAndUpdate(UUID deviceId, Device modifiedDevice) {
+    public Device findByIdAndUpdate(UUID deviceId, NewDevicePayload modifiedDevice) {
         Device found = findById(deviceId);
 
-        found.setStatus(modifiedDevice.getStatus());
-        found.setType(modifiedDevice.getType());
-        found.setEmployee(employeeService.findById(modifiedDevice.getEmployee().getEmployeeId()));
+        found.setStatus(convertStringToDeviceStatus(modifiedDevice.status()));
+        found.setType(convertStringToDeviceType(modifiedDevice.type()));
+        found.setEmployee(employeeService.findById(modifiedDevice.employeeId()));
         return deviceRepository.save(found);
     }
 
