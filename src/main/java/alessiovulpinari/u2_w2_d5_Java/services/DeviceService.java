@@ -5,6 +5,7 @@ import alessiovulpinari.u2_w2_d5_Java.enums.DeviceStatus;
 import alessiovulpinari.u2_w2_d5_Java.enums.DeviceType;
 import alessiovulpinari.u2_w2_d5_Java.exceptions.BadRequestException;
 import alessiovulpinari.u2_w2_d5_Java.exceptions.NotFoundException;
+import alessiovulpinari.u2_w2_d5_Java.payloads.DeviceEmployeePayload;
 import alessiovulpinari.u2_w2_d5_Java.payloads.NewDevicePayload;
 import alessiovulpinari.u2_w2_d5_Java.repositories.DeviceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,12 @@ public class DeviceService {
     public void findByIdAndDelete(UUID deviceId) {
         Device found = findById(deviceId);
         this.deviceRepository.delete(found);
+    }
+
+    public Device findByIdAndUpdateEmployee(UUID deviceId, DeviceEmployeePayload body) {
+        Device found = findById(deviceId);
+        found.setEmployee(this.employeeService.findById(body.employeeId()));
+        return this.deviceRepository.save(found);
     }
 
     private static DeviceType convertStringToDeviceType(String type) {

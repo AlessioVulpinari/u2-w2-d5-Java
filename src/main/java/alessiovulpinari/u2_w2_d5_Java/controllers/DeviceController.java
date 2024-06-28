@@ -2,6 +2,7 @@ package alessiovulpinari.u2_w2_d5_Java.controllers;
 
 import alessiovulpinari.u2_w2_d5_Java.entities.Device;
 import alessiovulpinari.u2_w2_d5_Java.exceptions.BadRequestException;
+import alessiovulpinari.u2_w2_d5_Java.payloads.DeviceEmployeePayload;
 import alessiovulpinari.u2_w2_d5_Java.payloads.DevicePayloadResponse;
 import alessiovulpinari.u2_w2_d5_Java.payloads.NewDevicePayload;
 import alessiovulpinari.u2_w2_d5_Java.services.DeviceService;
@@ -51,5 +52,10 @@ public class DeviceController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void findByIdAndDelete(@PathVariable UUID deviceId) {
         this.deviceService.findByIdAndDelete(deviceId);
+    }
+
+    @PatchMapping("/{deviceId}")
+    public Device updateEmployeeId(@PathVariable UUID deviceId, @RequestBody DeviceEmployeePayload body) {
+        return this.deviceService.findByIdAndUpdateEmployee(deviceId, body);
     }
 }
