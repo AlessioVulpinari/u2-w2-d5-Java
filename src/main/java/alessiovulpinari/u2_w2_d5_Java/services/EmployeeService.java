@@ -5,16 +5,23 @@ import alessiovulpinari.u2_w2_d5_Java.exceptions.BadRequestException;
 import alessiovulpinari.u2_w2_d5_Java.exceptions.NotFoundException;
 import alessiovulpinari.u2_w2_d5_Java.payloads.EmployeePayload;
 import alessiovulpinari.u2_w2_d5_Java.repositories.EmployeeRepository;
+import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.UUID;
 
 @Service
 public class EmployeeService {
+
+    @Autowired
+    private Cloudinary cloudinary;
 
     @Autowired
     private EmployeeRepository employeeRepository;
@@ -55,5 +62,16 @@ public class EmployeeService {
     public void findByIdAndDelete(UUID employeeId) {
         Employee found = findById(employeeId);
         this.employeeRepository.delete(found);
+    }
+
+    public String uploadAvatar(MultipartFile file) throws IOException {
+        return (String) cloudinary.uploader().upload(file.getBytes(), ObjectUtils.emptyMap()).get("url");
+    }
+
+    public Employee patchAvatar(UUID employeeId, String avatarUrl) {
+        Employee found = findById(employeeId);
+        found.setAvatarUrl(avatarUrl);
+
+        return  this.employeeRepository.save(found);
     }
 }
