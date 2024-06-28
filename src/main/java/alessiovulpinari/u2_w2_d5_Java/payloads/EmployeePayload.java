@@ -10,7 +10,7 @@ public record EmployeePayload(
         String username,
         @NotBlank(message = "Il nome è un dato obbligatorio!")
         @Size(min = 2, max = 20, message = "Inserire un nome compreso tra i 2 e i 20 caratteri" )
-        String fistName,
+        String firstName,
         @NotBlank(message = "Il cognome è un dato obbligatorio!")
         @Size(min = 2, max = 20, message = "Inserire un cognome compreso tra i 2 e i 20 caratteri")
         String LastName,

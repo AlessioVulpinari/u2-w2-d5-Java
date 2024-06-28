@@ -33,7 +33,7 @@ public class EmployeeService {
         this.employeeRepository.findByUsername(body.username()).ifPresent(employee -> {
             throw new BadRequestException("Esiste già un impiegato con questo username: " + body.username());});
 
-        Employee newEmployee = new Employee(body.username(), body.fistName(), body.LastName(), body.email());
+        Employee newEmployee = new Employee(body.username(), body.firstName(), body.LastName(), body.email());
         return employeeRepository.save(newEmployee);
     }
 
@@ -47,8 +47,8 @@ public class EmployeeService {
         found.setEmail(body.email());
         found.setUsername(body.username());
         found.setLastName(body.LastName());
-        found.setFirstName(body.fistName());
-        found.setAvatarUrl("https://ui-avatars.com/api/?name=" + body.fistName() + "+" + body.LastName());
+        found.setFirstName(body.firstName());
+        found.setAvatarUrl("https://ui-avatars.com/api/?name=" + body.firstName() + "+" + body.LastName());
         return employeeRepository.save(found);
     }
 
