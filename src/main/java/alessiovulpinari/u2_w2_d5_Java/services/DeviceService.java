@@ -46,7 +46,8 @@ public class DeviceService {
 
         found.setStatus(convertStringToDeviceStatus(modifiedDevice.status()));
         found.setType(convertStringToDeviceType(modifiedDevice.type()));
-        found.setEmployee(employeeService.findById(modifiedDevice.employeeId()));
+
+        if (modifiedDevice.employeeId() != null) found.setEmployee(employeeService.findById(modifiedDevice.employeeId()));
         return deviceRepository.save(found);
     }
 
